@@ -4,7 +4,7 @@ IF (EXISTS (SELECT *
    WHERE TABLE_SCHEMA = 'dbo'
    AND TABLE_NAME = 'BusState'))
    BEGIN
-      drop table BusState;
+      drop table BusState
    END;
 
    Create table dbo.BusState (
@@ -12,7 +12,7 @@ IF (EXISTS (SELECT *
 	RouteID varchar(10),
 	StopSequence int,
 	BusID varchar (8),
-	EventTIme datetime,
+	EventTIme varchar(20),
 	Backdoorentry int,
 	FrontDoorEntry int,
 	FrontDoorExit int,

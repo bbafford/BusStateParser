@@ -1,17 +1,24 @@
 import pyodbc
 
+
 def InitalizedDB():
 
+    CreateDatabase(".\sqlCreateBusState.sql")
+    CreateStoredProcedures(".\sqlCreateStoredProcedures.sql")
     return 0
 
-def CreateDatabase():
+def CreateDatabase(SQLFile):
+    executeScriptsFromFile(SQLFile)
     return 0
 
-def CreateStoredProcedures():
+def CreateStoredProcedures(SQLFile):
+  #  executeScriptsFromFile(SQLFile)
     return 0
 
 def executeScriptsFromFile(filename):
     # Open and read the file as a single buffer
+    conn = pyodbc.connect('DSN=BuswareLogs')
+    c = conn.cursor()
     fd = open(filename, 'r')
     sqlFile = fd.read()
     fd.close()
@@ -24,7 +31,6 @@ def executeScriptsFromFile(filename):
         # This will skip and report errors
         # For example, if the tables do not yet exist, this will skip over
         # the DROP TABLE commands
-        try:
-            c.execute(command)
-        except OperationalError, msg:
-            print "Command skipped: ", msg
+        print(command)
+        c.execute(command)
+    c.close()
