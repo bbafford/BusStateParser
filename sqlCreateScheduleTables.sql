@@ -29,16 +29,9 @@ IF (EXISTS (SELECT *
 
 Create table dbo.TripDetail (
 TripNo varchar(15),
-PatternID int,
-TripType varchar(50),
-ScheduleType varchar(50),
-Revenue bit,
-BlockNo bigint,
-BlockID varchar(30),
-Daymap varchar(70),
-TripID varchar(30),
-OrigTATripNo varchar(30),
-OrigTABlockID varchar(30))
+PassingTime bigint,
+TimepointID int,
+RunID varchar(50))
 
 IF (EXISTS (SELECT *
    FROM INFORMATION_SCHEMA.TABLES
@@ -49,17 +42,15 @@ IF (EXISTS (SELECT *
    END;
 
 Create table dbo.Pattern (
-TripNo varchar(15),
-PatternID int,
-TripType varchar(50),
-ScheduleType varchar(50),
-Revenue bit,
-BlockNo bigint,
-BlockID varchar(30),
-Daymap varchar(70),
-TripID varchar(30),
-OrigTATripNo varchar(30),
-OrigTABlockID varchar(30))
+PatternID bigint,
+TARoute varchar(50),
+PatternName varchar(50),
+Direction varchar(50),
+CDRoute varchar(50),
+CDVariation varchar(50),
+TAPatternID varchar(50),
+RouteKey bigint
+)
 
 IF (EXISTS (SELECT *
    FROM INFORMATION_SCHEMA.TABLES
@@ -70,17 +61,12 @@ IF (EXISTS (SELECT *
    END;
 
 Create table dbo.PatternDetail (
-TripNo varchar(15),
-PatternID int,
-TripType varchar(50),
-ScheduleType varchar(50),
-Revenue bit,
-BlockNo bigint,
-BlockID varchar(30),
-Daymap varchar(70),
-TripID varchar(30),
-OrigTATripNo varchar(30),
-OrigTABlockID varchar(30))
+PatternID bigint,
+geoid bigint,
+stopid bigint,
+TimepointID bigint,
+sortorder int
+)
 
 IF (EXISTS (SELECT *
    FROM INFORMATION_SCHEMA.TABLES

@@ -26,17 +26,17 @@ create procedure InsertTrip
 As
 begin
 	insert into [dbo].Trip (
-	@TripNo,
-@PatternID,
-@TripType ,
-@ScheduleType ,
-@Revenue ,
-@BlockNo ,
-@BlockID,
-@Daymap ,
-@TripID ,
-@OrigTATripNo ,
-@OrigTABlockID 
+	TripNo,
+PatternID,
+TripType ,
+ScheduleType ,
+Revenue ,
+BlockNo ,
+BlockID,
+Daymap ,
+TripID ,
+OrigTATripNo ,
+OrigTABlockID 
 	)
 	values(
 @TripNo ,

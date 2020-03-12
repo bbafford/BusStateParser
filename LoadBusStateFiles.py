@@ -2,7 +2,7 @@ import csv
 import os
 import pyodbc
 
-def ImportFiles(strPath):
+def ImportFiles(strPath,strProcessedPath):
     conn = pyodbc.connect('DSN=BuswareLogs')
     c = conn.cursor()
     args=[]
@@ -28,18 +28,37 @@ def ImportFiles(strPath):
 
             print(f'Processed {line_count} lines.')
             conn.commit()
-def ImportScheduleMDB(strMDBPath):
+            #when the file is done, move it to a processed directory
+            csv_file.close()
+
+            os.rename(strPath + "\\" + filename,strProcessedPath + "\\" + filename)
+
+def ImportScheduleMDB():
     conn = pyodbc.connect('DSN=BWSchedule')
     c = conn.cursor()
 
     connLog = pyodbc.connect('DSN=BuswareLogs')
     cLog = connLog.cursor()
 
+#Get all of the rows from the Schedule trip file
     c.execute ("select TripNo, PatternID, TripType, ScheduleType, Revenue, BlockNo, BlockID, Daymap, TripID, OrigTATripNo, OrigTABlockID from Trip")
     result = c.fetchall()
-    for row in result:
-        print(row)
-        #insert the values from the mdb into the sql database
-        cLog.execute ('insert into ')
+    cLog.executemany('insert into trip (TripNo,PatternID,TripType,ScheduleType,Revenue,BlockNo, BlockID,Daymap,TripID, OrigTATripNo,OrigTABlockID) values(?,?,?,?,?,?,?,?,?,?,?)', result)
+    cLog.commit()
 
+#Get all of the rows from Tripdetail
+    c.execute("select TripNo, PassingTIme, TimepointID, RunID from TripDetail")
+    result = c.fetchall()
+    cLog.executemany('insert into tripdetail (TripNo, PassingTIme, TimepointID, RunID) values(?,?,?,?)', result)
+    cLog.commit()
 
+#Get all of the stops
+    c.execute("select GeoID, GeoDescription, TAGeoID,Longitude,Latitude from Stops")
+    result = c.fetchall()
+    cLog.executemany('insert into Stops (GeoID, GeoDescription, TAGeoID,Longitude,Latitude) values(?,?,?,?,?)', result)
+    cLog.commit()
+#get all of the pattern data
+    c.execute("select PatternID, TARoute, PatternName,Direction,CDRoute, CDVariation,TAPatternID from Pattern")
+    result = c.fetchall()
+    cLog.executemany('insert into Pattern (PatternID, TARoute, PatternName,Direction,CDRoute, CDVariation,TAPatternID ) values(?,?,?,?,?,?,?)', result)
+    cLog.commit()
