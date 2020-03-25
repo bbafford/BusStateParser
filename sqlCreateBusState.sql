@@ -19,5 +19,8 @@ IF (EXISTS (SELECT *
 	BackDoorExit int,
 	operatorid varchar(8),
 	Latitude decimal(10,8),
-	Longitude decimal (10,8)
+	Longitude decimal (10,8),
+	BusStateFile varchar(50),
+	EventType int,
+	Workstatus int
 )

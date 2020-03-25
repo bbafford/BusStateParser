@@ -1,6 +1,7 @@
 import csv
 import os
 import pyodbc
+import zipfile
 
 def ImportFiles(strPath,strProcessedPath):
     conn = pyodbc.connect('DSN=BuswareLogs')
@@ -9,7 +10,13 @@ def ImportFiles(strPath,strProcessedPath):
     print (strPath)
     for filename in os.listdir(strPath):
         print (strPath + "\\" + filename)
-        with open(strPath + "\\" + filename) as csv_file:
+        #unzip the file to the local path
+        with zipfile.ZipFile(strPath + "\\" + filename,"r") as zip_ref:
+            zip_ref.extractall(strPath + "\\unzipped")
+        unzipped_filename = filename[:-4]
+
+
+        with open(strPath + "\\unzipped\\" + unzipped_filename) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             line_count = 0
             for row in csv_reader:
@@ -20,11 +27,11 @@ def ImportFiles(strPath,strProcessedPath):
 
                    # print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
                     line_count += 1
-                    args=(row[0],row[1],row[2],row[3],row[6],row[8],row[9],row[10],row[11],row[14],row[20],row[21])
+                    args=(row[0],row[1],row[2],row[3],row[6],row[8],row[9],row[10],row[11],row[14],row[20],row[21], filename)
 
                     print(f'Column names are {", ".join(args)}')
-                   # c.callproc("busstatelogs.dbo.InsertBusStateEntry",args)
-                    c.execute("{call buswarelogs.dbo.InsertBusStateEntry(?,?,?,?,?,?,?,?,?,?,?,?)}", (args))
+
+                    c.execute("{call buswarelogs.dbo.InsertBusStateEntry(?,?,?,?,?,?,?,?,?,?,?,?,?)}", args)
 
             print(f'Processed {line_count} lines.')
             conn.commit()

@@ -22,23 +22,10 @@ create procedure InsertBusStateEntry
 	@BackDoorExit int,
 	@operatorid varchar(8),
 	@Latitude decimal(10,8),
-	@Longitude decimal (10,8))
+	@Longitude decimal (10,8),
+	@Filename varchar(50))
 As
 begin
-
-declare @BusToolsVersion varchar(21)
-declare @RouteID varchar(10)
-
-declare 	@StopSequence int
-declare 	@BusID varchar (8)
-declare 	@EventTIme datetime
-declare 	@Backdoorentry int
-declare 	@FrontDoorEntry int
-declare 	@FrontDoorExit int
-declare 	@BackDoorExit int
-declare 	@operatorid varchar(8)
-declare 	@Latitude decimal(10,8)
-declare 	@Longitude decimal (10,8)
 
 
 	insert into [dbo].BusState (BusToolsVersion,
@@ -52,7 +39,8 @@ declare 	@Longitude decimal (10,8)
 	BackDoorExit ,
 	operatorid,
 	Latitude ,
-	Longitude
+	Longitude,
+	BusStateFile
 	)
 	values
 	(@BusToolsVersion,
@@ -66,7 +54,8 @@ declare 	@Longitude decimal (10,8)
 	@BackDoorExit ,
 	@operatorid,
 	@Latitude ,
-	@Longitude
+	@Longitude,
+	@filename
 	)
 end
 go
