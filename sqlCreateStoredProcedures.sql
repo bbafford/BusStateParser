@@ -23,7 +23,10 @@ create procedure InsertBusStateEntry
 	@operatorid varchar(8),
 	@Latitude decimal(10,8),
 	@Longitude decimal (10,8),
-	@Filename varchar(50))
+	@Filename varchar(50),
+	@eventtype int,
+	@Workstatus int
+	)
 As
 begin
 
@@ -40,7 +43,10 @@ begin
 	operatorid,
 	Latitude ,
 	Longitude,
-	BusStateFile
+	BusStateFile,
+	EventType,
+	Workstatus
+
 	)
 	values
 	(@BusToolsVersion,
@@ -55,7 +61,9 @@ begin
 	@operatorid,
 	@Latitude ,
 	@Longitude,
-	@filename
+	@filename,
+	@eventtype,
+	@workstatus
 	)
 end
 go

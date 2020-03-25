@@ -27,11 +27,11 @@ def ImportFiles(strPath,strProcessedPath):
 
                    # print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
                     line_count += 1
-                    args=(row[0],row[1],row[2],row[3],row[6],row[8],row[9],row[10],row[11],row[14],row[20],row[21], filename)
+                    args=(row[0],row[1],row[2],row[3],row[6],row[8],row[9],row[10],row[11],row[14],row[20],row[21], filename,row[24],row[32])
 
                     print(f'Column names are {", ".join(args)}')
 
-                    c.execute("{call buswarelogs.dbo.InsertBusStateEntry(?,?,?,?,?,?,?,?,?,?,?,?,?)}", args)
+                    c.execute("{call buswarelogs.dbo.InsertBusStateEntry(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}", args)
 
             print(f'Processed {line_count} lines.')
             conn.commit()

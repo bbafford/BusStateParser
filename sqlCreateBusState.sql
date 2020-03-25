@@ -23,4 +23,5 @@ IF (EXISTS (SELECT *
 	BusStateFile varchar(50),
 	EventType int,
 	Workstatus int
+
 )
