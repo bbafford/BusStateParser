@@ -4,10 +4,13 @@ from CreateDatabase import InitalizedDB
 from LoadBusStateFiles import ImportFiles
 from LoadBusStateFiles import ImportScheduleMDB
 #InitalizedDB()
-strPath = "C:\\Users\\BBafford\\PycharmProjects\\BusState Parser\\BusStateFiles"
+#strPath = "C:\\Users\\BBafford\\PycharmProjects\\BusState Parser\\BusStateFiles"
 strProcessedPath = "C:\\Users\\BBafford\\PycharmProjects\\BusState Parser\\processed"
+#strUnzippedPath = "C:\\Users\\BBafford\\PycharmProjects\\BusState Parser\\BusStateFiles\\Unzipped"
+strPath ="y:\\"
+strUnzippedPath = "g:\\NJTBusState\\"
 print(strPath)
-ImportFiles(strPath, strProcessedPath)
+ImportFiles(strPath, strProcessedPath,strUnzippedPath)
 #ImportScheduleMDB();
 
 # class MainFrame(wx.Frame):
